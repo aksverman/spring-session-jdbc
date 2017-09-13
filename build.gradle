@@ -1,0 +1,59 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'org.akhikhl.gretty'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+version = '1.0'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'spring-session',
+                   'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    
+	compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.2'
+	compile group: 'org.springframework', name: 'spring-webmvc', version: '4.1.6.RELEASE'
+	compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '1.3.1.RELEASE'
+	compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.2.2'
+	compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+	compile group: 'org.apache.taglibs', name: 'taglibs-standard-impl', version: '1.2.5'
+	
+	compile group: 'log4j', name: 'log4j', version: '1.2.16'
+	compile group: 'com.h2database', name: 'h2', version: '1.0.60'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
+
+gretty {
+	httpPort = 8090
+	contextPath = '/spring-session'
+	// ... many more properties
+}
+buildscript {
+	repositories {
+		jcenter()
+	}
+	
+	dependencies {
+		classpath 'org.akhikhl.gretty:gretty:+'
+	}
+}
